@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Lotofácil</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Lotofácil</h1>
+  <p>Clique no botão para gerar 15 novos números:</p>
+  <button id="generate-button">Gerador de numeros</button>
+  <h2>Números Vencedores</h2>
+  <ul id="numbers"></ul>
+
+  <script>
+    // Check if a number is prime
+    function isPrime(num) {
+      // 0 and 1 are not prime
+      if (num <= 1) return false;
+      // 2 is prime
+      if (num == 2) return true;
+      // Check if the number is divisible by any number between 2 and itself
+      for (var i = 2; i < num; i++) {
+        if (num % i == 0) return false;
+      }
+      return true;
+    }
+
+    // Get the generate button
+    var button = document.getElementById("generate-button");
+
+    // Add an event listener to the button
+    button.addEventListener("click", function() {
+      // Initialize an empty array to store the numbers
+      var numbers = [];
+
+      // Generate 15 random numbers
+      while (numbers.length < 15) {
+        // Generate a random number between 1 and 25
+        var num = Math.floor(Math.random() * 25) + 1;
+
+        // Check if the number is already in the array
+        if (!numbers.includes(num)) {
+          // Add the number to the array if it's not already there
+          numbers.push(num);
+        }
+      }
+
+      // Sort the numbers array
+      numbers.sort(function(a, b) {
+        return a - b;
+      });
+
+      // Get the ul element
+      var ul = document.getElementById("numbers");
+
+      // Clear the ul element
+      ul.innerHTML = "";
+
+      // Add the numbers to the ul element
+      for (var i = 0; i < numbers.length; i++) {
+        var li = document.createElement("li");
+        li.innerHTML = numbers[i];
+        // Color even numbers blue and prime numbers red
+        if (numbers[i] % 2 == 0) {
+          li.style.color = "blue";
+        } else if (isPrime(numbers[i])) {
+          li.style.color = "red";
+        }
+        ul.appendChild(li);
+      }
+    });
+  </script>
+</body>
+</html>
